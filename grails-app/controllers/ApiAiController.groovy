@@ -25,7 +25,7 @@ class ApiAiController {
 					case "master_sugg":
 						suggestion=[["suggest":"Show me performance of fund"], ["suggest":"Show me the portfolio of the fund"], ["suggest":"Latest presentation of the fund"], ["suggest":"NAV of the fund"], ["suggest":"Investment objective of the fund"]]
 						jsonData=["type":11,
-							"text":"The \"Invesco India P S U Equity Fund\" scheme is doing well today.\nWould you like to know more about this scheme?",
+							"text":"Sure, what would you like to know? \nHere are a few suggestions",
 							"response":[],
 							"suggestion":suggestion]
 						break;

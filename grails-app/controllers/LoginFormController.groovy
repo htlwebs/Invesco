@@ -36,6 +36,7 @@ class LoginFormController {
 	}
 
 	def login() {
+		def user=""
 		def jasonData=[]
 		def msg="Incorrect Email id or password"
 		def success=false
@@ -43,10 +44,11 @@ class LoginFormController {
 		def password=params.password
 		Registration regObj= Registration.findByEmailAndPassword(email,password)
 		if(regObj!=null) {
+			user=regObj.getName()
 			msg="Login sucess"
 			success=true
 		}
-		jasonData=["msg":msg,"success":success]
+		jasonData=["msg":msg,"success":success,"user":user]
 		render jasonData as JSON
 	}
 

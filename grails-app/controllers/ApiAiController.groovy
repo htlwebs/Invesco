@@ -23,9 +23,9 @@ class ApiAiController {
 
 
 					case "master_sugg":
-						suggestion=[["suggest":"Show me performance of fund"], ["suggest":"Show me the portfolio of the fund"], ["suggest":"Latest presentation of the fund"], ["suggest":"Nav of the fund"], ["suggest":"Investment objective of the fund"]]
+						suggestion=[["suggest":"Show me performance of fund"], ["suggest":"Show me the portfolio of the fund"], ["suggest":"Latest presentation of the fund"], ["suggest":"NAV of the fund"], ["suggest":"Investment objective of the fund"]]
 						jsonData=["type":11,
-							"text":"Hey! Here is something that you can ask!",
+							"text":"The \"Invesco India P S U Equity Fund\" scheme is doing well today.\nWould you like to know more about this scheme?",
 							"response":[],
 							"suggestion":suggestion]
 						break;
@@ -77,13 +77,13 @@ class ApiAiController {
 
 					case"fund.manager":
 						jsonData=["type":0,
-							"text":response.getResult().getFulfillment().getSpeech(),
+							"text":"1. Amit Ganatra - Since 9 November, 2010\n2. Pranav Gokhale - Since 28 September, 2015.",
 							"response":[],
 							"suggestion":getSuggestion("fund.manager")]
 						break;
 
 					case"fund.presentation":
-						def jasonData=["type":9,"text":"Sure! Here the latest presentation of the fund",
+						def jasonData=["type":9,"text":"Sure! Here is the latest presentation of the fund",
 							"isMap":false,
 							"pdf":urls+"pdf/Invesco India PSU Equity Fund Presentation.pdf",
 							"pages":29,"size":"1267712","name":"Invesco India PSU Equity Fund Presentation.pdf","display_name":"Invesco India PSU Equity Fund Presentation",
@@ -106,31 +106,31 @@ class ApiAiController {
 						switch(period)
 						{
 							case "1 year":
-								resp=	[["year":"1yr","rfund":"51.19%","rbse":"53.18%","rnifty":"27.09%","vfund":"15,129","vbse":"15,318"]]
+								resp=	[["year":"1yr","rfund":"51.29%","rbse":"53.18%","rnifty":"27.09%","vfund":"15,129","vbse":"15,318"]]
 								break;
 							case "3 year":
-								resp=	[["year":"3yr","rfund":"28.09%","rbse":"15.34%","rnifty":"12.25%","vfund":"21,029","vbse":"15,318"]]
+								resp=	[["year":"3yr","rfund":"28.09%","rbse":"15.34%","rnifty":"12.25%","vfund":"21,029","vbse":"15,348"]]
 								break;
 							case "5 year":
-								resp=	[["year":"5yr","rfund":"11.39%","rbse":"1.74%","rnifty":"10.51%","vfund":"17,151","vbse":"15,318"]]
+								resp=	[["year":"5yr","rfund":"11.39%","rbse":"1.74%","rnifty":"10.51%","vfund":"17,151","vbse":"10,902"]]
 								break;
 							case "7 year":
-								resp=	[["year":"7yr","rfund":"8.57%","rbse":"-1.20%","rnifty":"8.78%","vfund":"17,794","vbse":"15,318"]]
+								resp=	[["year":"7yr","rfund":"8.57%","rbse":"-1.20%","rnifty":"8.78%","vfund":"17,794","vbse":"9,186"]]
 								break;
 							case "10 year":
-								resp=	[["year":"10yr","rfund":"NA","rbse":"4.00%","rnifty":"9.01%","vfund":"NA","vbse":"15,318"]]
+								resp=	[["year":"10yr","rfund":"NA","rbse":"4.00%","rnifty":"9.01%","vfund":"NA","vbse":"14,813"]]
 								break;
 							case "since inception":
-								resp=	[["year":"Since Inception","rfund":"8.05%","rbse":"-1.15%","rnifty":"8.04%","vfund":"157,580","vbse":"9,191"]]
+								resp=	[["year":"Since Inception","rfund":"8.05%","rbse":"-1.15%","rnifty":"8.04%","vfund":"17,580","vbse":"9,191"]]
 								break;
 							default:
 								resp=	[
-									["year":"1yr","rfund":"51.19%","rbse":"53.18%","rnifty":"27.09%","vfund":"15,129","vbse":"15,318"],
-									["year":"3yr","rfund":"28.09%","rbse":"15.34%","rnifty":"12.25%","vfund":"21,029","vbse":"15,318"],
-									["year":"5yr","rfund":"11.39%","rbse":"1.74%","rnifty":"10.51%","vfund":"17,151","vbse":"15,318"],
-									["year":"7yr","rfund":"8.57%","rbse":"-1.20%","rnifty":"8.78%","vfund":"17,794","vbse":"15,318"],
-									["year":"10yr","rfund":"NA","rbse":"4.00%","rnifty":"9.01%","vfund":"NA","vbse":"15,318"],
-									["year":"Since Inception","rfund":"8.05%","rbse":"-1.15%","rnifty":"8.04%","vfund":"157,580","vbse":"9,191"]
+									["year":"1yr","rfund":"51.29%","rbse":"53.18%","rnifty":"27.09%","vfund":"15,129","vbse":"15,318"],
+									["year":"3yr","rfund":"28.09%","rbse":"15.34%","rnifty":"12.25%","vfund":"21,029","vbse":"15,348"],
+									["year":"5yr","rfund":"11.39%","rbse":"1.74%","rnifty":"10.51%","vfund":"17,151","vbse":"10,902"],
+									["year":"7yr","rfund":"8.57%","rbse":"-1.20%","rnifty":"8.78%","vfund":"17,794","vbse":"9,186"],
+									["year":"10yr","rfund":"NA","rbse":"4.00%","rnifty":"9.01%","vfund":"NA","vbse":"14,813"],
+									["year":"Since Inception","rfund":"8.05%","rbse":"-1.15%","rnifty":"8.04%","vfund":"17,580","vbse":"9,191"]
 								]
 								break;
 						}
@@ -163,18 +163,18 @@ class ApiAiController {
 
 							period = period.substring(1, period.length()-1)
 						}
-						println "Nav Type : ${period}"
+						println "NAV Type : ${period}"
 
 						switch(period)
 						{
-							case"direct":
-								resp=[["type":"Direct","growth":"17.92","dividend":"16.17"]]
-								break;
 							case"indirect":
-								resp=[["type":"Indirect","growth":"18.96","dividend":"17.02"]]
+								resp=[["type":"Indirect","growth":"17.92","dividend":"16.17"]]
+								break;
+							case"direct":
+								resp=[["type":"Direct","growth":"18.96","dividend":"17.02"]]
 								break;
 							default:
-								resp=[["type":"Direct","growth":"17.92","dividend":"16.17"], ["type":"Indirect","growth":"18.96","dividend":"17.02"]]
+								resp=[["type":"Direct","growth":"18.96","dividend":"17.02"], ["type":"Indirect","growth":"17.92","dividend":"16.17"]]
 								break;
 
 						}
@@ -265,11 +265,11 @@ class ApiAiController {
 				break;
 
 			case"fund.presentation":
-				return [["suggest":"Who is fund manager?"], ["suggest":"Where does the fund invests?"], ["suggest":"Nav of the fund"]]
+				return [["suggest":"Give me details of the portfolio"], ["suggest":"Where does the fund invests?"], ["suggest":"NAV of the fund"]]
 				break;
 
 			case "performance.details":
-				return [["suggest":"Who is fund manager?"], ["suggest":"Where does the fund invests?"], ["suggest":"Nav of the fund"]]
+				return [["suggest":"Who is fund manager?"], ["suggest":"Where does the fund invests?"], ["suggest":"NAV of the fund"]]
 				break;
 
 			case"inception.date":
@@ -277,7 +277,7 @@ class ApiAiController {
 				break;
 
 			case"investment.objective":
-				return [["Where does the fund invests?"], ["suggest":"Who is fund manager?"], ["suggest":"Show me the NAV"]]
+				return [["suggest":"Where does the fund invests?"], ["suggest":"Who is fund manager?"], ["suggest":"Dividend history of the fund"], ["suggest":"Show me the NAV"]]
 				break;
 
 			case"nav":

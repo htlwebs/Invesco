@@ -1,5 +1,3 @@
-
-
 import ai.api.AIConfiguration;
 import ai.api.AIDataService;
 import ai.api.model.AIRequest;
@@ -10,7 +8,7 @@ public class TextClientApplication {
 	public static AIResponse getData(String line) {
 
 		AIConfiguration configuration = new AIConfiguration(
-				"c707d732add944d2904e15b13d54501f");
+				"0aa04d5a7b0f4921873db055fbf6f85d");
 
 		AIDataService dataService = new AIDataService(configuration);
 

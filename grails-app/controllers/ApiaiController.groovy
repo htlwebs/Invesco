@@ -1,6 +1,6 @@
 import grails.converters.JSON
 import ai.api.model.AIResponse
-class ApiAiController {
+class ApiaiController {
 	String urls="http://35.154.92.3:8080/Invesco/"
 	//String urls="http://192.168.0.222:8080/Invesco/"
 	def index() { }
@@ -241,7 +241,7 @@ class ApiAiController {
 				break;
 
 			case"benchmark":
-				return [["suggest":"Show me perfomance of the fund"], ["suggest":"Who manages the fund?"], ["suggest":"Show the current size of fund"]]
+				return [["suggest":"Show me performance of the fund"], ["suggest":"Who manages the fund?"], ["suggest":"Show the current size of fund"]]
 				break;
 
 			case"support.contacts":
@@ -249,7 +249,7 @@ class ApiAiController {
 				break;
 
 			case"dividend.history":
-				return [["suggest":"Give me details of the portfolio"], ["suggest":"Show me the latest presentation"], ["suggest":"Show me perfomance of the fund"]]
+				return [["suggest":"Give me details of the portfolio"], ["suggest":"Show me the latest presentation"], ["suggest":"Show me performance of the fund"]]
 				break;
 
 			case"expense.ratio":
@@ -257,7 +257,7 @@ class ApiAiController {
 				break;
 
 			case"fund.details":
-				return [["suggest":"Show me perfomance of the fund"], ["suggest":"Show me the NAV"], ["suggest":"Show me the latest presentation"]]
+				return [["suggest":"Show me performance of the fund"], ["suggest":"Show me the NAV"], ["suggest":"Show me the latest presentation"]]
 				break;
 
 			case"fund.manager":

@@ -1,6 +1,6 @@
 import grails.converters.JSON
 import ai.api.model.AIResponse
-class ApiaiController {
+class ApiAiController {
 	String urls="http://35.154.92.3:8080/Invesco/"
 	//String urls="http://192.168.0.222:8080/Invesco/"
 	def index() { }

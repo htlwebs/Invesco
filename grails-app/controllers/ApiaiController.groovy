@@ -1,18 +1,13 @@
 import grails.converters.JSON
-import invesco.DataPushService
-import invesco.InvescoAiEntry
+import invesco.InvescoApiaiEntry
 import ai.api.model.AIResponse
 class ApiaiController {
 	String urls="http://35.154.92.3:8080/Invesco/"
 	//String urls="http://192.168.0.222:8080/Invesco/"
-	def index() { }
-	def qq()
-	{
-		DataPushService oo= new DataPushService()
-	println	oo.test()
-	}
+
+
 	String action=""
-	def getAidata() {	
+	def getAidata() {
 		String username;
 		def jsonData=[]
 		def suggestion=[]
@@ -21,17 +16,18 @@ class ApiaiController {
 		AIResponse response=TextClientApplication.getData(params.inputData)
 		if(response!=null) {
 			try{
-				InvescoAiEntry newQ= new InvescoAiEntry()
-				newQ.empcode=params.empcode
-				newQ.que=params.inputData
-				newQ.ans=response.getResult().getFulfillment().getSpeech() as String
-				newQ.time= new java.sql.Timestamp(new Date().getTime())
+				InvescoApiaiEntry newQ= new InvescoApiaiEntry()
+				newQ.usrCd=params.empcode
+				newQ.apiQue=params.inputData
+				newQ.apiAns=response.getResult().getFulfillment().getSpeech() as String
+				newQ.apiAction=response.getResult().getAction() as String
+				newQ.apiDate= new java.sql.Timestamp(new Date().getTime())
 				newQ.save()
-					}
-				catch(Exception e)
-				{
-					println"Error in storing answer....${e}"
-				}
+			}
+			catch(Exception e)
+			{
+				println"Error in storing answer....${e}"
+			}
 			if(response.getStatus().getCode()==200) {
 				println "Speech:"+response.getResult().getFulfillment().getSpeech()
 				println "Action:"+ response.getResult().getAction()

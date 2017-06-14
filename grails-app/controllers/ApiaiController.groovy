@@ -4,11 +4,14 @@ import javax.net.ssl.SSLContext
 import ai.api.model.AIResponse
 import ai.recast.*;
 
+
+
 class ApiaiController {
 	String urls="http://35.154.92.3:8080/Invesco/"
 	//String urls="http://192.168.0.222:8080/Invesco/"
 
 	Client client = null;
+	Response recastResponse=null;
 	Conversation conv = null;
 	
 	def getAidata()
@@ -27,8 +30,13 @@ class ApiaiController {
 			println "Speech:"+aiResponse.getResult().getFulfillment().getSpeech()
 			println "Action:"+ aiResponse.getResult().getAction()
 			processedResponse = new ProcessedResponse();
+			if(aiResponse.getResult().getParameters()!=null)
+			{
+				aiResponse.getResult().getParameters().get("period")!=null?processedResponse.setPeriod(parsedString(aiResponse.getResult().getParameters().get("period") as String)):processedResponse.setPeriod("")
+				aiResponse.getResult().getParameters().get("navtype")!=null?processedResponse.setNavtype(parsedString(aiResponse.getResult().getParameters().get("navtype") as String)):processedResponse.setNavtype("")
+			}
 			processedResponse.setResponseAction(aiResponse.getResult().getAction());
-			processedResponse.setResponseParameters(aiResponse.getResult().getParameters());
+			//processedResponse.setResponseParameters(aiResponse.getResult().getParameters());
 			processedResponse.setResponseText(aiResponse.getResult().getFulfillment().getSpeech());
 			
 		}
@@ -39,14 +47,15 @@ class ApiaiController {
 			{
 				println"Inside Recast.AI Controller"
 				client = new Client("f68d7eba67d0d42c30924c819ada1d6a");
-				conv = client.request.doTextConverse(params.inputData);
+				recastResponse=client.textRequest(params.inputData);
+				//conv = client.request.doTextConverse(params.inputData);
 				//Entity entity[] = conv.getEntities().get("name");
 				//Response responses= client.textRequest(params.inputData);
 				//Intent intent = responses.getIntent();
 				//processedResponse = new ProcessedResponse();
 				//processedResponse.setResponseAction(conv.getAction().getSlug());
 				//processedResponse.setResponseParameters(rr);
-				println "Conversation-->${conv.getSource()}"
+				println "Recast Response-->${recastResponse.getSource()}"
 			
 				//Entity entity[]= rr.getEntities("name");
 			}
@@ -138,13 +147,15 @@ class ApiaiController {
 
 			case "performance-details":
 
-				if(response.getResult().getParameters().get("period")!="")
-				{period=response.getResult().getParameters().get("period").toString()
+				/*if(processedResponse.getResponseParameters.get("period")!="")
+				{period=processedResponse.getResponseParameters.get("period").toString()
 
 					period = period.substring(1, period.length()-1)
 				}
 				println "Data for pr : ${period}"
-
+*/
+			period=processedResponse.getPeriod()
+			
 				switch(period)
 				{
 					case "1 year":
@@ -200,11 +211,14 @@ class ApiaiController {
 
 			case "nav":
 				period=""
-				if(response.getResult().getParameters().get("navtype")!="")
-				{period=response.getResult().getParameters().get("navtype").toString()
+				/*
+				if(processedResponse.getResponseParameters.get("navtype")!="")
+				{period=processedResponse.getResponseParameters.get("navtype").toString()
 
 					period = period.substring(1, period.length()-1)
 				}
+				*/
+				period=processedResponse.getNavtype()
 				println "NAV Type : ${period}"
 
 				switch(period)
@@ -336,17 +350,14 @@ class ApiaiController {
 	
 	def test()
 	{
-//		SSLContext sslContext = SSLContext.getInstance("TLS");
-//		System.setProperty("https.protocols", "TLSv1.2,SSLv3");
-		client = new Client("f68d7eba67d0d42c30924c819ada1d6a");
-		conv = client.request.doTextConverse(params.inputData);
-		//Entity entity[] = conv.getEntities().get("name");
-		//Response responses= client.textRequest(params.inputData);
-		//Intent intent = responses.getIntent();
-		//processedResponse = new ProcessedResponse();
-		//processedResponse.setResponseAction(conv.getAction().getSlug());
-		//processedResponse.setResponseParameters(rr);
-		println "Conversation-->${conv.getSource()}"
-	
+		client= new Client("f68d7eba67d0d42c30924c819ada1d6a");
+		recastResponse=client.textRequest(params.inputData);
+		println("Source--> "+recastResponse.getSource());
+		println("Action--> "+recastResponse.getIntent().getName());
+		println("NavType--> "+(recastResponse.getEntity("navtype")!=null?recastResponse.getEntity("navtype").getValue():""));
+		println("Duration--> "+(recastResponse.getEntity("duration")!=null?recastResponse.getEntity("duration").getData().optInt("years")+" year":0+" year"));
+		//println "recasrResponse--> ${recastResponse}"
+		
+		
 	}
 }

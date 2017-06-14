@@ -12,6 +12,7 @@ public class Entity {
     private String name;
     private double confidence;
     private JSONObject data;
+    private String value;
 
     Entity (String name, JSONObject o) {
         this.data = o;
@@ -19,6 +20,7 @@ public class Entity {
         
         if(o != null){
         	this.confidence = o.optDouble("confidence");
+        	this.value = o.optString("value");
         }
     }
 
@@ -42,17 +44,20 @@ public class Entity {
     
     /**
      * Returns the value of the entity
-     * @return The confidence of the entity
+     * @return The value of the entity
      */
     public String getValue() {
-    	
-        try {
-			return this.data.getString("value");
-		} catch (JSONException e) {
-			return "";
-		}
-    }
+    	return this.value;
+	  }
 
+    /**
+     * Returns the value of the jason data
+     * @return The value of the jason data
+     */
+    public JSONObject getData() {
+    	return this.data;
+    }
+    
     
     /**
      * Returns the fields described by the parameter if it exists or null otherwise

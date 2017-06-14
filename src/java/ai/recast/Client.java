@@ -304,7 +304,7 @@ public class Client {
 			System.out.println(responseCode);
 			throw new RecastException(responseCode);
 		}
-		System.out.println("RecastJson" + recastJson.toString());
+		
 		return recastJson;
 	}
 }

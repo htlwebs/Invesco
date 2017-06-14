@@ -8,7 +8,7 @@ public class TextClientApplication {
 	public static AIResponse getData(String line) {
 
 		AIConfiguration configuration = new AIConfiguration(
-				"aedd30fdaf2e496991b09e0a720690ee"+"test");
+				"0f7e16edc3d34b40904c5f775eb9d17b");
 
 		AIDataService dataService = new AIDataService(configuration);
 

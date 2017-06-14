@@ -3,12 +3,13 @@ import invesco.InvescoApiaiEntry
 import javax.net.ssl.SSLContext
 import ai.api.model.AIResponse
 import ai.recast.*;
+import java.util.Random;
 
 
 
 class ApiaiController {
-	String urls="http://35.154.92.3:8080/Invesco/"
-	//String urls="http://192.168.0.222:8080/Invesco/"
+	//String urls="http://35.154.92.3:8080/Invesco/"
+	String urls="http://192.168.0.222:8080/Invesco/"
 
 	Client client = null;
 	Response recastResponse=null;
@@ -46,6 +47,7 @@ class ApiaiController {
 			try
 			{
 				println"Inside Recast.AI Controller"
+			/*
 				client = new Client("f68d7eba67d0d42c30924c819ada1d6a");
 				recastResponse=client.textRequest(params.inputData);
 				//conv = client.request.doTextConverse(params.inputData);
@@ -56,8 +58,25 @@ class ApiaiController {
 				//processedResponse.setResponseAction(conv.getAction().getSlug());
 				//processedResponse.setResponseParameters(rr);
 				println "Recast Response-->${recastResponse.getSource()}"
-			
 				//Entity entity[]= rr.getEntities("name");
+		 
+			 */
+				
+				
+				client= new Client("f68d7eba67d0d42c30924c819ada1d6a");
+				recastResponse=client.textRequest(params.inputData);
+				processedResponse = new ProcessedResponse();
+				
+				processedResponse.setResponseAction(recastResponse.getIntent().getName())
+				processedResponse.setNavtype((recastResponse.getEntity("navtype")!=null?recastResponse.getEntity("navtype").getValue():""));
+				processedResponse.setPeriod((recastResponse.getEntity("duration")!=null?recastResponse.getEntity("duration").getData().optInt("years")+" year":0+" year"));
+				processedResponse.setResponseText(randomText());
+				
+				
+				//println("Source--> "+recastResponse.getSource());
+				//println("Action--> "+recastResponse.getIntent().getName());
+				//println("NavType--> "+(recastResponse.getEntity("navtype")!=null?recastResponse.getEntity("navtype").getValue():""));
+				//println("Duration--> "+(recastResponse.getEntity("duration")!=null?recastResponse.getEntity("duration").getData().optInt("years")+" year":0+" year"));
 			}
 			catch(Exception e)
 			{
@@ -71,6 +90,11 @@ class ApiaiController {
 				"suggestion":getSuggestion("default")]
 			}
 		}
+		
+		/**
+		 * Calling a function to store data in table
+		 */
+		apiAiEntry(processedResponse);
 
 		switch(processedResponse.getResponseAction())
 		{
@@ -154,7 +178,7 @@ class ApiaiController {
 				}
 				println "Data for pr : ${period}"
 */
-			period=processedResponse.getPeriod()
+				period=processedResponse.getPeriod()
 			
 				switch(period)
 				{
@@ -348,14 +372,43 @@ class ApiaiController {
 		return str.substring(1, str.length()-1)
 	}
 	
+	String randomText()
+	{
+		String []texts =["Sorry! I did not get the last statement!","Sorry I am trying to learn! Please give me some time to learn","Last part is new for me! Let me work on it!","Sorry I missed the last part!","Ohh! I did not get the last part!"];
+	return texts[new Random().nextInt(4)]
+	}
+	
+	
+	def apiAiEntry(ProcessedResponse processedResponse)
+	{
+		try{
+			InvescoApiaiEntry newQ= new InvescoApiaiEntry()
+			newQ.usrCd=params.empcode!=null?params.empcode:"DEMO"
+			newQ.apiQue=params.inputData
+			newQ.apiAns=processedResponse.getResponseText();
+			newQ.apiAction=processedResponse.getResponseAction();
+			newQ.apiDate= new java.sql.Timestamp(new Date().getTime())
+			newQ.save()
+		}
+		catch(Exception e)
+		{
+			println"Error in storing answer....${e}"
+		}
+	}
+	
 	def test()
 	{
+		
 		client= new Client("f68d7eba67d0d42c30924c819ada1d6a");
 		recastResponse=client.textRequest(params.inputData);
-		println("Source--> "+recastResponse.getSource());
+		
 		println("Action--> "+recastResponse.getIntent().getName());
 		println("NavType--> "+(recastResponse.getEntity("navtype")!=null?recastResponse.getEntity("navtype").getValue():""));
 		println("Duration--> "+(recastResponse.getEntity("duration")!=null?recastResponse.getEntity("duration").getData().optInt("years")+" year":0+" year"));
+		Random rand = new Random();
+		
+		int randomNum = rand.nextInt(3);
+		println"Random No--> ${randomNum}"
 		//println "recasrResponse--> ${recastResponse}"
 		
 		

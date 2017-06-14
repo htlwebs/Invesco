@@ -6,6 +6,8 @@ public class ProcessedResponse {
 	private HashMap responseParameters;
 	private String navtype;
 	private String period;
+	
+	
 	public String getResponseText() {
 		return responseText;
 	}

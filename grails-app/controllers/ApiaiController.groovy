@@ -8,8 +8,8 @@ import java.util.Random;
 
 
 class ApiaiController {
-	//String urls="http://35.154.92.3:8080/Invesco/"
-	String urls="http://192.168.0.222:8080/Invesco/"
+	String urls="http://35.154.92.3:8080/Invesco/"
+	//String urls="http://192.168.0.222:8080/Invesco/"
 
 	Client client = null;
 	Response recastResponse=null;
@@ -47,7 +47,7 @@ class ApiaiController {
 			try
 			{
 				println"Inside Recast.AI Controller"
-			/*
+/*
 				client = new Client("f68d7eba67d0d42c30924c819ada1d6a");
 				recastResponse=client.textRequest(params.inputData);
 				//conv = client.request.doTextConverse(params.inputData);
@@ -60,7 +60,7 @@ class ApiaiController {
 				println "Recast Response-->${recastResponse.getSource()}"
 				//Entity entity[]= rr.getEntities("name");
 		 
-			 */
+*/
 				
 				
 				client= new Client("f68d7eba67d0d42c30924c819ada1d6a");
@@ -171,7 +171,7 @@ class ApiaiController {
 
 			case "performance-details":
 
-				/*if(processedResponse.getResponseParameters.get("period")!="")
+/*				if(processedResponse.getResponseParameters.get("period")!="")
 				{period=processedResponse.getResponseParameters.get("period").toString()
 
 					period = period.substring(1, period.length()-1)
@@ -235,13 +235,13 @@ class ApiaiController {
 
 			case "nav":
 				period=""
-				/*
+/*
 				if(processedResponse.getResponseParameters.get("navtype")!="")
 				{period=processedResponse.getResponseParameters.get("navtype").toString()
 
 					period = period.substring(1, period.length()-1)
 				}
-				*/
+*/
 				period=processedResponse.getNavtype()
 				println "NAV Type : ${period}"
 

@@ -405,12 +405,13 @@ class ApiaiController {
 		println("Action--> "+recastResponse.getIntent().getName());
 		println("NavType--> "+(recastResponse.getEntity("navtype")!=null?recastResponse.getEntity("navtype").getValue():""));
 		println("Duration--> "+(recastResponse.getEntity("duration")!=null?recastResponse.getEntity("duration").getData().optInt("years")+" year":0+" year"));
-		Random rand = new Random();
+		def jsonData=["action":recastResponse.getIntent().getName()]
+		//Random rand = new Random();
 		
-		int randomNum = rand.nextInt(3);
-		println"Random No--> ${randomNum}"
+		//int randomNum = rand.nextInt(3);
+		//println"Random No--> ${randomNum}"
 		//println "recasrResponse--> ${recastResponse}"
 		
-		
+		render jsonData as JSON
 	}
 }

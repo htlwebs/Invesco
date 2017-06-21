@@ -38,7 +38,7 @@ class ApiaiController {
 			}
 			processedResponse.setResponseAction(aiResponse.getResult().getAction());
 			//processedResponse.setResponseParameters(aiResponse.getResult().getParameters());
-			processedResponse.setResponseText(aiResponse.getResult().getFulfillment().getSpeech());
+			processedResponse.setResponseText(aiResponse.getResult().getFulfillment().getSpeech() as String!=""?aiResponse.getResult().getFulfillment().getSpeech() as String:"NA");
 			
 		}
 
@@ -379,7 +379,7 @@ class ApiaiController {
 	}
 	
 	
-	def apiAiEntry(ProcessedResponse processedResponse)
+	def apiAiEntry(processedResponse)
 	{
 		try{
 			InvescoApiaiEntry newQ= new InvescoApiaiEntry()
